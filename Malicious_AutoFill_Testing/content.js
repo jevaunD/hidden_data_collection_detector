@@ -259,8 +259,50 @@ showTagsBtn.addEventListener("click", () => {
         greeting.innerHTML = "✅ No suspicious tags found.";
     } else {
         greeting.innerHTML = tags.map(t => `• <code>${t}</code>`).join("<br>");
+
+        //Also display the close button for the tag results shown
+        const resultCloseBtn = document.createElement("button");
+        resultCloseBtn.textContent = "✖";
+        resultCloseBtn.title = "Hide detected tags";
+        resultCloseBtn.style.position = "absolute";
+        resultCloseBtn.style.top = "4px";
+        resultCloseBtn.style.right = "6px";
+        resultCloseBtn.style.background = "transparent";
+        resultCloseBtn.style.border = "none";
+        resultCloseBtn.style.fontSize = "14px";
+        resultCloseBtn.style.cursor = "pointer";
+        resultCloseBtn.style.color = "#555";
+        greeting.appendChild(resultCloseBtn);
+
+// === Hide results when close is clicked ===
+        resultCloseBtn.addEventListener("click", () => {
+            greeting.style.display = "none";
+        });
     }
     greeting.style.display = "block";
+});
+
+
+//Close button just incase it is blocking something
+const closeBtn = document.createElement("button");
+closeBtn.textContent = "✖";
+closeBtn.title = "Hide this panel temporarily";
+closeBtn.style.position = "absolute";
+closeBtn.style.top = "6px";
+closeBtn.style.right = "8px";
+closeBtn.style.background = "transparent";
+closeBtn.style.border = "none";
+closeBtn.style.fontSize = "16px";
+closeBtn.style.cursor = "pointer";
+closeBtn.style.color = "#666";
+closeBtn.style.padding = "0";
+
+// Append it before other content
+greeting.appendChild(closeBtn);
+
+// === Hide overlay on click ===
+closeBtn.addEventListener("click", () => {
+    greeting.style.display = "none";
 });
 
 
