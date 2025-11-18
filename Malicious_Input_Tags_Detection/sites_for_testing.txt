@@ -1,0 +1,96 @@
+********THESE ARE JUST SITES TO TEST THE EXTENSION***********
+
+🌐 Common Login / Signup Pages
+
+https://accounts.google.com/signin
+
+https://login.live.com/
+
+https://login.yahoo.com/
+
+https://www.facebook.com/login/
+
+https://twitter.com/login
+
+https://www.instagram.com/accounts/login/
+
+https://www.linkedin.com/login
+
+https://github.com/login
+
+https://gitlab.com/users/sign_in
+
+https://bitbucket.org/account/signin/
+
+💳 E-Commerce / Payment
+
+https://www.amazon.com/ap/signin
+
+https://www.ebay.com/signin/
+
+https://www.etsy.com/signin
+
+https://www.walmart.com/account/login
+
+https://www.bestbuy.com/identity/global/signin
+
+https://www.paypal.com/signin
+
+https://checkout.stripe.com/pay
+
+https://squareup.com/login
+
+https://www.shopify.com/login
+
+https://www.target.com/account/login
+
+🏦 Banking / Financial
+
+https://online.citi.com/US/login.do
+
+https://secure.bankofamerica.com/login/sign-in/signOnV2Screen.go
+
+https://www.chase.com/personal/logon
+
+https://www.wellsfargo.com/login/
+
+https://auth.capitalone.com/
+
+https://www.payoneer.com/accounts/login/
+
+https://secure.hsbc.com/1/2/logon
+
+https://www.revolut.com/login
+
+https://www.americanexpress.com/en-us/account/login/
+
+https://wise.com/login
+
+👩🏽‍💼 Bonus — Employment / Government / Education
+
+https://www.linkedin.com/signup
+
+https://www.glassdoor.com/profile/login_input.htm
+
+https://login.microsoftonline.com/
+ (for Azure / M365 / EDU)
+
+https://www.myaccount.google.com/
+
+https://www.irs.gov/payments/view-your-tax-account
+ (redirects to login)
+
+💡Pro tip for testing:
+
+If you want to confirm your manifest matching works properly, visit a few of these and check your extension overlay loads.
+If you want to see what’s skipped, open sites like:
+
+https://www.bbc.com/
+
+https://www.nytimes.com/
+
+https://www.youtube.com/
+
+https://www.wikipedia.org/
+
+https://www.reddit.com/
