@@ -2,7 +2,7 @@
 
 <h2>Overview</h2>
 
-This browser extension enhances user awareness and control by revealing what information websites request through autofill forms. It scans webpage input fields, categorizes data requests based on predefined tags, and clearly displays these to the user — helping increase transparency in everyday online interactions.
+<div>This browser extension enhances user awareness and control by revealing what information websites request through autofill forms. It scans webpage input fields, categorizes data requests based on predefined tags, and clearly displays these to the user — helping increase transparency in everyday online interactions</div>
 
 Features
 Automatically detects webpage input fields tied to autofill data.
