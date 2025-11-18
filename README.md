@@ -1,4 +1,4 @@
-Privacy-Aware Autofill Inspector Extension
+<h1>Privacy-Aware Autofill Inspector Extension</h1>
 Overview
 This browser extension enhances user awareness and control by revealing what information websites request through autofill forms. It scans webpage input fields, categorizes data requests based on predefined tags, and clearly displays these to the user — helping increase transparency in everyday online interactions.
 
