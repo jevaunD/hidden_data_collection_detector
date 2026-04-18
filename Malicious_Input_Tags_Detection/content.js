@@ -51,121 +51,59 @@ let has_misc_tag = false;
 const inputs = Array.from(document.querySelectorAll("input, select, textarea"));
 
 
-//This is where all the matches between the current input tag names on the webpage and the predetermined tags will be stored.
-const matches = [];
 
 
 //Now let's match!**************************
 
-//Checking for payment info in the input tags list.
+
+
+//This block of code is used to remove duplicates
+function cleanAttrs(input) {
+    return Array.from(
+        new Set(
+            `${input.id} ${input.name} ${input.placeholder}`
+                .toLowerCase()
+                .split(/\s+/)
+                .filter(Boolean)
+        )
+    ).join(" ");
+}
+
+
+
+// Use Set to prevent duplicate entries
+const matchesSet = new Set();
+
+// Category configuration
+const categories = [
+    { list: payment_info, flag: () => has_payment_tag = true },
+    { list: auth_info, flag: () => has_auth_tag = true },
+    { list: bank_info, flag: () => has_bank_tag = true },
+    { list: pii_info, flag: () => has_pii_tag = true },
+    { list: cont_info, flag: () => has_cont_tag = true },
+    { list: loc_info, flag: () => has_loc_tag = true },
+    { list: emp_info, flag: () => has_emp_tag = true },
+    { list: health_info, flag: () => has_health_tag = true },
+    { list: mfa_info, flag: () => has_mfa_tag = true },
+    { list: misc_info, flag: () => has_misc_tag = true }
+];
+
+// Main loop
 inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    payment_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_payment_tag = true;
-        }
-    })
+    const attrs = cleanAttrs(input);
+
+    categories.forEach(category => {
+        category.list.forEach(tag => {
+            if (attrs.includes(tag.toLowerCase())) {
+                matchesSet.add(attrs); // ✅ no duplicates
+                category.flag();       // ✅ set correct flag
+            }
+        });
+    });
 });
 
-//Checking for user/auth info in input tags list.
-inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    auth_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_auth_tag = true;
-        }
-    })
-});
-
-//checking for bank info tags in input tags list.
-inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    bank_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_bank_tag = true;
-        }
-    })
-});
-
-//Checking for Personally Identifiable Information (PII) in input tags list.
-inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    pii_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_pii_tag = true;
-        }
-    })
-});
-
-//Checking for contact info in input tags list.
-inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    cont_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_cont_tag = true;
-        }
-    })
-});
-
-//Checking for Location info in input tags list.
-inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    loc_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_loc_tag = true;
-        }
-    })
-});
-
-//Checking for employment ifo in input tags list.
-inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    emp_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_emp_tag = true;
-        }
-    })
-});
-
-//Checking for health and insurance info in input tags list.
-inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    health_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_health_tag = true;
-        }
-    })
-});
-
-//Checking for mfa one time tokens etc in input tags list.
-inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    mfa_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_mfa_tag = true;
-        }
-    })
-});
-
-//Checking for general high risk misc tags in input list.
-inputs.forEach(input => {
-    const attrs = `${input.id} ${input.name} ${input.placeholder}`.toLowerCase();
-    misc_info.forEach(tag => {
-        if(attrs.includes(tag.toLowerCase())){
-            matches.push(attrs);
-            has_misc_tag = true;
-        }
-    })
-});
+// Final clean results
+const matches = Array.from(matchesSet);
 
 //Div setup to display info
 const greeting = document.createElement("div");
