@@ -3,7 +3,7 @@
   "name": "Autofill Detector",
   "version": "1.0",
   "description": "Detects suspicious autofill behavior on webpages.",
-  "permissions": ["scripting", "tabs"],
+  "permissions": ["scripting", "tabs", "clipboardRead"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon.png"
@@ -26,7 +26,8 @@
         "*://*/*login*",
         "*://*/*signin*",
         "*://*/*auth*",
-        "https://autofill-danger-1.netlify.app/"
+        "https://autofill-danger-1.netlify.app/", 
+        "*://*/*"
       ],
       "js": ["content.js"],
       "run_at": "document_end"
