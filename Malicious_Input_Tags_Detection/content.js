@@ -4,8 +4,9 @@ console.log("✅ Content script running on:", window.location.href);
 const inputs_num = Number(document.querySelectorAll("input").length);
 const labels_num = Number(document.querySelectorAll("label").length);
 
-//Check#2 -- There's a big difference in the input and label tags, now what is being requested by these input tags?
-//these will then be put into a list to be looped and matched at a later date.
+/*I started from basing the logic solely on the difference between what is being displayed (label tag) vs what is being requested (input tag)
+buuuuuuuut, this alone would rake in mostly false positives. So, I changed the logic a little bit and added a little razzle dazzle I think.
+*/
 
 //first list. Authentication & account tags
 const auth_info = ["username", "user", "user_name", "login", "userId", "email", "userEmail", "password", "pass", "pwd", "current_password", "new_password", "confirm_password", "passwd", "passwordConfirm", "pass_confirm", "secret", "master_password", "masterPass"];
@@ -53,11 +54,11 @@ const inputs = Array.from(document.querySelectorAll("input, select, textarea"));
 
 
 
-//Now let's match!**************************
+//**************************Now let's match!**************************
 
 
 
-//This block of code is used to remove duplicates
+//This block of code is used to remove duplicates.... It makes the result look much better.
 function cleanAttrs(input) {
     return Array.from(
         new Set(
@@ -95,8 +96,8 @@ inputs.forEach(input => {
     categories.forEach(category => {
         category.list.forEach(tag => {
             if (attrs.includes(tag.toLowerCase())) {
-                matchesSet.add(attrs); // ✅ no duplicates
-                category.flag();       // ✅ set correct flag
+                matchesSet.add(attrs); //  Again, no duplicates!
+                category.flag();       //  Set correct flag
             }
         });
     });
@@ -110,15 +111,7 @@ const greeting = document.createElement("div");
 
 let results = [];
 
-// if (inputs > labels_num && has_payment_tag ){
-//     results.push(`More input fields than labels!`);
-// } else if (inputs_num / labels_num >= 2) {
-//     results.push(`Score: ${inputs_num / labels_num}`);
-// } else {
-//     results.push("Nothing to see here!");
-// }
-
-let count = 1;
+let count = 1; //Used to list the tags found.
 
 // Add other checks
 if (has_payment_tag) {
@@ -172,12 +165,13 @@ if (has_misc_tag) {
 }
 
 
-greeting.style.color = "black";
+greeting.style.color = "black"; //Font color. Just incase a better color could work
+
 // Display all results on separate lines
 greeting.innerHTML = results.join("<br>");
 
 
-//button to show tags
+//button to show exact input tag terms 
 const showTagsBtn = document.createElement("button");
 showTagsBtn.textContent = "Show Detected Tags";
 showTagsBtn.style.width = "100%";
@@ -212,7 +206,7 @@ showTagsBtn.addEventListener("click", () => {
         resultCloseBtn.style.color = "#555";
         greeting.appendChild(resultCloseBtn);
 
-// === Hide results when close is clicked ===
+        // === Hide results when close is clicked ===
         resultCloseBtn.addEventListener("click", () => {
             greeting.style.display = "none";
         });
@@ -244,16 +238,277 @@ closeBtn.addEventListener("click", () => {
 });
 
 
-// Popup style
-greeting.style.position = "fixed";   // makes it float on the screen
-greeting.style.top = "10px";         // distance from the top
-greeting.style.right = "10px";       // distance from the right
+// Tags panel style (Main panel display)
+greeting.style.position = "fixed";
+greeting.style.top = "10px";
+greeting.style.right = "10px";
 greeting.style.fontWeight = "bold";
 greeting.style.background = "white";
-greeting.style.zIndex = "999999";    // makes sure it’s on top
+greeting.style.zIndex = "999999";
 greeting.style.padding = "8px 12px";
 greeting.style.border = "1px solid #ccc";
 greeting.style.borderRadius = "8px";
 greeting.style.boxShadow = "0 2px 6px rgba(0,0,0,0.15)";
 
 document.body.appendChild(greeting);
+
+
+//======================================== Clipboard Detector ================================================
+
+
+// Vars to input captured data.
+const ClipboardDetector = (() => {
+  let _capturedText = '';
+  let _captureSource = '';
+  let _revealed = false;
+
+  // ***************Let's redact what has been caught just incase*********************
+
+  function redactValue(str) {
+    if (!str || str.length === 0) return '(empty)';
+
+    const emailRe = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g;
+    const phoneRe = /(\+?\d[\d\s\-().]{6,}\d)/g;
+    const cardRe  = /\b\d{4}[\s\-]?\d{4}[\s\-]?\d{4}[\s\-]?\d{4}\b/g;
+    const tokenRe = /\b[A-Za-z0-9\-_]{20,}\b/g;
+
+    let out = str
+      .replace(emailRe, m => {
+        const [user, domain] = m.split('@');
+        return user[0] + '***@' + domain.replace(/./g, '*').slice(0, -3) + domain.slice(-3);
+      })
+      .replace(phoneRe, m => m.slice(0, 3) + '****' + m.slice(-2))
+      .replace(cardRe,  m => '**** **** **** ' + m.replace(/\D/g, '').slice(-4))
+      .replace(tokenRe, m => m.slice(0, 4) + '•'.repeat(Math.min(m.length - 6, 12)) + m.slice(-2));
+
+    return out.length > 120 ? out.slice(0, 120) + ' …' : out;
+  }
+
+  // ********************Classification******************************
+
+  function classifyContent(str) {
+    if (!str) return { label: 'data', risk: 'medium' };
+    if (/[a-zA-Z0-9._%+\-]+@/.test(str))                             return { label: 'email address', risk: 'high' };
+    if (/\b\d{4}[\s\-]?\d{4}[\s\-]?\d{4}[\s\-]?\d{4}\b/.test(str)) return { label: 'card number', risk: 'high' };
+    if (/\b[A-Za-z0-9\-_]{30,}\b/.test(str))                         return { label: 'token / API key', risk: 'high' };
+    if (/https?:\/\//.test(str))                                      return { label: 'URL', risk: 'low' };
+    if (str.length > 60)                                              return { label: 'text block', risk: 'medium' };
+    return { label: 'short text', risk: 'low' };
+  }
+
+  // *****************************Clipboard interception*****************************
+
+  function interceptClipboard(onDetected) {
+    // Method 1: Intercept document.execCommand('copy')
+    const origExec = document.execCommand.bind(document);
+    document.execCommand = function (cmd, ...args) {
+      if (cmd === 'copy') {
+        const selection = window.getSelection()?.toString() || '';
+        if (selection) onDetected(selection, 'execCommand');
+      }
+      return origExec(cmd, ...args);
+    };
+
+    // Method 2: Intercept the async Clipboard API (navigator.clipboard.writeText)
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      const origWrite = navigator.clipboard.writeText.bind(navigator.clipboard);
+      navigator.clipboard.writeText = function (text) {
+        onDetected(text, 'clipboard API');
+        return origWrite(text);
+      };
+    }
+
+    // Method 3: Intercept ClipboardEvent on 'copy'
+    document.addEventListener('copy', (e) => {
+      const text = e.clipboardData?.getData('text/plain') ||
+                   window.getSelection()?.toString() || '';
+      if (text) onDetected(text, 'copy event');
+    }, true);
+  }
+
+  // *******************Toggle redacted preview*************************
+
+  function toggleReveal(boxEl, btnEl) {
+    _revealed = !_revealed;
+    if (_revealed) {
+      boxEl.textContent = redactValue(_capturedText);
+      boxEl.style.display = 'block';
+      btnEl.textContent = '🙈 Hide preview';
+    } else {
+      boxEl.style.display = 'none';
+      btnEl.textContent = '👁 Show redacted preview';
+    }
+  }
+
+  // ***************************Clipboard panel HTML***********************************
+
+  function buildSection() {
+    const section = document.createElement('div');
+
+    section.innerHTML = `
+      <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px;">
+        <span style="font-size:15px;">📋</span>
+        <span style="color:#7dd4fc; font-size:13px; font-weight:bold; letter-spacing:0.02em;">Clipboard Access</span>
+        <span id="ext-cb-badge" hidden style="
+          margin-left: auto;
+          background: #dc2626;
+          color: #fff;
+          font-size: 10px;
+          padding: 2px 8px;
+          border-radius: 999px;
+          font-weight: bold;
+          letter-spacing: 0.05em;
+        ">⚠ DETECTED</span>
+      </div>
+
+      <div id="ext-cb-detected" hidden>
+        <p id="ext-cb-summary" style="
+          color: #bae6fd;
+          font-size: 12px;
+          margin: 0 0 6px 0;
+          line-height: 1.5;
+          font-weight: normal;
+        "></p>
+
+        <button id="ext-cb-reveal-btn" style="
+          width: 100%;
+          padding: 6px 10px;
+          background: transparent;
+          border: 1px solid #1a6fa8;
+          border-radius: 6px;
+          color: #7dd4fc;
+          font-size: 12px;
+          font-weight: bold;
+          cursor: pointer;
+        ">👁 Show redacted preview</button>
+
+        <pre id="ext-cb-redacted" hidden style="
+          margin-top: 8px;
+          background: #081726;
+          border: 1px solid #1a6fa8;
+          border-radius: 6px;
+          padding: 8px 10px;
+          font-size: 11px;
+          color: #93c5fd;
+          white-space: pre-wrap;
+          word-break: break-all;
+          line-height: 1.5;
+        "></pre>
+
+        <p id="ext-cb-meta" style="
+          color: #475569;
+          font-size: 10px;
+          margin-top: 6px;
+          font-weight: normal;
+        "></p>
+      </div>
+
+      <div id="ext-cb-clean" hidden>
+        <p style="color:#4ade80; font-size:12px; margin:0; font-weight:normal;">
+          ✔ No clipboard write detected.
+        </p>
+      </div>
+    `;
+
+    return section;
+  }
+
+  function wireEvents(section) {
+    const revealBtn  = section.querySelector('#ext-cb-reveal-btn');
+    const redactedEl = section.querySelector('#ext-cb-redacted');
+    revealBtn.addEventListener('click', () => toggleReveal(redactedEl, revealBtn));
+  }
+
+  function showDetected(section, text, source) {
+    const { label } = classifyContent(text);
+    const time = new Date().toLocaleTimeString();
+
+    section.querySelector('#ext-cb-badge').hidden = false;
+    section.querySelector('#ext-cb-summary').textContent =
+      `Copied ${label} (${text.length} chars) via ${source}`;
+    section.querySelector('#ext-cb-meta').textContent =
+      `Detected at load · ${time}`;
+    section.querySelector('#ext-cb-detected').hidden = false;
+  }
+
+  function showClean(section) {
+    section.querySelector('#ext-cb-clean').hidden = false;
+  }
+
+  // ********************Public API*************************
+
+  function renderClipboardSection(containerEl) {
+    const section = buildSection();
+    containerEl.appendChild(section);
+    wireEvents(section);
+
+    let detected = false;
+
+    interceptClipboard((text, source) => {
+      if (detected) return;
+      detected = true;
+      _capturedText  = text;
+      _captureSource = source;
+      showDetected(section, text, source);
+    });
+
+    // If nothing fires within 2s of load, mark as clean
+    setTimeout(() => {
+      if (!detected) showClean(section);
+    }, 2000);
+  }
+
+  return { renderClipboardSection };
+})();
+
+
+// ******************************Separate clipboard panel — dark blue box, sits just below the tags panel *********************************
+
+const clipboardPanel = document.createElement("div");
+
+clipboardPanel.style.position = "fixed";
+clipboardPanel.style.right = "10px";
+clipboardPanel.style.zIndex = "999999";
+clipboardPanel.style.background = "#0f1e2e";
+clipboardPanel.style.border = "1px solid #1a6fa8";
+clipboardPanel.style.borderRadius = "8px";
+clipboardPanel.style.padding = "10px 12px";
+clipboardPanel.style.boxShadow = "0 2px 8px rgba(0,0,0,0.4)";
+clipboardPanel.style.maxWidth = "280px";
+clipboardPanel.style.fontFamily = "sans-serif";
+
+document.body.appendChild(clipboardPanel);
+
+// Wait one frame so greeting has its final rendered height, then position below it
+requestAnimationFrame(() => {
+  const greetingBottom = greeting.getBoundingClientRect().bottom;
+  clipboardPanel.style.top = (greetingBottom + 8) + "px";
+});
+
+
+
+//Close button for the clipboard portion
+const closeBtnClip = document.createElement("button");
+closeBtnClip.textContent = "✖";
+closeBtnClip.title = "Hide this panel";
+closeBtnClip.style.position = "absolute";
+closeBtnClip.style.top = "6px";
+closeBtnClip.style.right = "8px";
+closeBtnClip.style.background = "transparent";
+closeBtnClip.style.border = "none";
+closeBtnClip.style.fontSize = "16px";
+closeBtnClip.style.cursor = "pointer";
+closeBtnClip.style.color = "#666";
+closeBtnClip.style.padding = "0";
+
+clipboardPanel.appendChild(closeBtnClip);
+
+// === Hide overlay on click ===
+closeBtnClip.addEventListener("click", () => {
+    clipboardPanel.style.display = "none";
+});
+
+
+
+
+ClipboardDetector.renderClipboardSection(clipboardPanel);
