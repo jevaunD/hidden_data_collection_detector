@@ -14,18 +14,11 @@ So instead of just feeling uneasy about it, this extension was built to **remove
 
 ## 📸 See It In Action
 
-<!-- PASTE YOUR DEMO SCREENSHOT(S) HERE -->
-<!-- Suggested format: -->
 ![Screenshot 1](./screenshots/first-run.png)
 ![Screenshot 2](./screenshots/show-button.png)
 
 &nbsp;
 
-<!-- PASTE YOUR DEMO VIDEO HERE -->
-<!-- Suggested format: -->
-<!-- [![Demo Video](./screenshots/video-thumbnail.png)]() -->
-
----
 
 ## 🚀 Installation
 
