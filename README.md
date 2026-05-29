@@ -22,7 +22,7 @@ So instead of just feeling uneasy about it, this extension was built to **remove
 
 ## 🚀 Installation
 
-Never loaded an unpacked browser extension before? No stress — it's genuinely easier than it sounds. Pick your browser below and follow along.
+Never loaded an unpacked browser extension before? Not a problem! It's genuinely easier than it sounds. Pick your browser below and follow along.
 
 ---
 
