@@ -17,6 +17,7 @@ So instead of just feeling uneasy about it, this extension was built to **remove
 <!-- PASTE YOUR DEMO SCREENSHOT(S) HERE -->
 <!-- Suggested format: -->
 ![Screenshot 1](./screenshots/first-run.png)
+![Screenshot 2](./screenshots/show-button.png)
 
 &nbsp;
 
