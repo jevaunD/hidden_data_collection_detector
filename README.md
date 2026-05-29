@@ -10,12 +10,9 @@ It started with a post by [Ryan Montgomery](https://www.linkedin.com/posts/rappe
 
 So instead of just feeling uneasy about it, this extension was built to **remove the abstraction**. To bring what's happening in the background into plain view, so that at the very least, you know what's going on when websites are reaching for your data. You deserve to be informed before deciding what to hand over and what to keep!
 
----
+--
 
-## 📸 See It In Action
 
-![Screenshot 1](./screenshots/first-run.png)
-![Screenshot 2](./screenshots/show-button.png)
 
 &nbsp;
 
@@ -111,7 +108,7 @@ Hope you find this useful! And if you don't — please, be brutally honest. That
 
 The best place to reach me is **LinkedIn** (that's where I'm most active), but feel free to hit me up on any of my socials:
 
-- 🔗 LinkedIn: [Your LinkedIn](xhttps://www.linkedin.com/in/jevaun-s-75b4a6127/)
+- 🔗 LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/jevaun-s-75b4a6127/)
 - 🐦 Twitter/X: [Your Twitter](https://x.com/cyberjevii)
 
 Seriously — if something's broken, confusing, or could be better, I want to hear it!
