@@ -86,7 +86,7 @@ Never loaded an unpacked browser extension before? Not a problem! It's genuinely
 
 If you've read about half of this and are thinking *"that's a lot of words"* — honestly, same. Here's a short video that walks through the whole setup process:
 
-▶️ [Watch the Installation Walkthrough](<PASTE YOUTUBE LINK HERE>)
+▶️ [Watch the Installation Walkthrough](https://www.youtube.com/watch?v=QUCAMNFrb2k)
 
 ---
 
@@ -94,17 +94,14 @@ If you've read about half of this and are thinking *"that's a lot of words"* —
 
 Once the extension is running, here's an example of the kind of output you'll see:
 
-<!-- PASTE EXAMPLE RESULTS SCREENSHOT HERE -->
-<!-- Suggested format: -->
-<!-- ![Example Output](./screenshots/example-output.png) -->
+![Screenshot 1](./screenshots/first-run.png)
+
 
 &nbsp;
 
-The extension also gives you the option to **view the raw tag terms** — useful if you want to dig deeper into exactly what's being flagged and why. Here's a short demo of that feature in action:
+The extension also gives you the option to **view the raw tag terms** — useful if you want to dig deeper into exactly what's being flagged and why. The repo also includes a demo video.
 
-<!-- PASTE RAW TAG TERMS VIDEO HERE -->
-<!-- Suggested format: -->
-<!-- [![Raw Tags Demo](./screenshots/raw-tags-thumbnail.png)](PASTE_VIDEO_LINK_HERE) -->
+![Screenshot 2](./screenshots/show-button.png)
 
 ---
 
@@ -114,17 +111,21 @@ Hope you find this useful! And if you don't — please, be brutally honest. That
 
 The best place to reach me is **LinkedIn** (that's where I'm most active), but feel free to hit me up on any of my socials:
 
-- 🔗 LinkedIn: [Your LinkedIn](<PASTE LINK HERE>)
-- 🐦 Twitter/X: [Your Twitter](<PASTE LINK HERE>)
-- 📷 Instagram: [Your Instagram](<PASTE LINK HERE>)
+- 🔗 LinkedIn: [Your LinkedIn](xhttps://www.linkedin.com/in/jevaun-s-75b4a6127/)
+- 🐦 Twitter/X: [Your Twitter](https://x.com/cyberjevii)
 
-Seriously — if something's broken, confusing, or could be better, I want to hear it.
+Seriously — if something's broken, confusing, or could be better, I want to hear it!
 
 ---
 
 ## 📄 License
 
-<!-- Add your license here, e.g.: MIT License -->
+MIT License
+
+Copyright (c) 2026 Jevaun Smith
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files...
 
 ---
 
