@@ -6,7 +6,7 @@
 
 ## Why This Exists
 
-It started with a post by [Ryan Montgomery](<[https://www.linkedin.com/posts/rapper_how-autofill-can-steal-your-personal-information-ugcPost-7215066702416408576-OTbU/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB839rcBjSvXXJjsQ3yylg1_EqngQQ5_Wps]>) about the dangers of autofill — and honestly, it lit a fire. The realization hit: so much could be happening in the background, silently, without us ever knowing. Data being read, fields being tracked, inputs being harvested (all while we're just trying to fill out a form for our convienience).
+It started with a post by [Ryan Montgomery](https://www.linkedin.com/posts/rapper_how-autofill-can-steal-your-personal-information-ugcPost-7215066702416408576-OTbU/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB839rcBjSvXXJjsQ3yylg1_EqngQQ5_Wps) about the dangers of autofill — and honestly, it lit a fire. The realization hit: so much could be happening in the background, silently, without us ever knowing. Data being read, fields being tracked, inputs being harvested (all while we're just trying to fill out a form for our convienience).
 
 So instead of just feeling uneasy about it, this extension was built to **remove the abstraction**. To bring what's happening in the background into plain view, so that at the very least, you know what's going on when websites are reaching for your data. You deserve to be informed before deciding what to hand over and what to keep!
 
