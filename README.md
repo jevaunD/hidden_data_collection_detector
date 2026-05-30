@@ -109,7 +109,7 @@ Inside the `Malicious_Input_Tags_Detection` folder, you'll find a text document 
 
 By default, the extension is configured to trigger on every site, as well as on the specific site that serves as a **Proof of Concept (POC)** for the autofill danger threat vector. This was intentional. In practice, a lot of login, sign-up, and account pages simply don't include terms like `login`, `signup`, or `logon`  etc. If the extension only listened for those keywords, it would miss a good chunk of what it's meant to catch.
 
-That said, you have full control here. You can open and edit the [`manifest.json`](manifest.json) file to fine-tune exactly which sites trigger the extension — whether that's restricting it to specific domains you're concerned about, or adding URL patterns you've noticed requesting more data than they let on. Think of it as setting the rules of engagement on your own terms.
+That said, you have full control here. You can open and edit the [`manifest.json`](Malicious_Input_Tags_Detection/manifest.json) file to fine-tune exactly which sites trigger the extension — whether that's restricting it to specific domains you're concerned about, or adding URL patterns you've noticed requesting more data than they let on. Think of it as setting the rules of engagement on your own terms.
 
 ---
 
