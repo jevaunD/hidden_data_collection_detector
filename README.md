@@ -134,7 +134,7 @@ The best place to reach me is **LinkedIn** (that's where I'm most active), but f
 - 🔗 LinkedIn: [LinkedIn](https://www.linkedin.com/in/jevaun-s-75b4a6127/)
 - 🐦 Twitter/X: [Twitter](https://x.com/cyberjevii)
 
-Seriously — if something's broken, confusing, or could be better, I want to hear it!
+Listen, if something's broken, confusing, or could be better, I want to hear it!
 
 ---
 
