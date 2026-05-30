@@ -102,14 +102,37 @@ The extension also gives you the option to **view the raw tag terms** — useful
 
 ---
 
+
+## 🛠️ A Little Bit More — Customizing Your Triggers
+
+Inside the `Malicious_Input_Tags_Detection` folder, you'll find a text document called [`sites_for_testing`](Malicious_Input_Tags_Detection/sites_for_testing.txt) that includes a few sites you can use to put the extension to the test right away.
+
+By default, the extension is configured to trigger on every site, as well as on the specific site that serves as a **Proof of Concept (POC)** for the autofill danger threat vector. This was intentional. In practice, a lot of login, sign-up, and account pages simply don't include terms like `login`, `signup`, or `logon`  etc. If the extension only listened for those keywords, it would miss a good chunk of what it's meant to catch.
+
+That said, you have full control here. You can open and edit the [`manifest.json`](manifest.json) file to fine-tune exactly which sites trigger the extension — whether that's restricting it to specific domains you're concerned about, or adding URL patterns you've noticed requesting more data than they let on. Think of it as setting the rules of engagement on your own terms.
+
+---
+
+## 🧪 Coming Soon — Clipboard Manipulation Detection
+
+Here's something worth keeping an eye on: **clickfixing**.
+
+Clickfixing is a social engineering technique where a malicious site tricks you into copying and pasting a command — usually by disguising it as a CAPTCHA or verification step. You think you're proving you're human; you're actually pasting malware into your own terminal!
+
+There's a version of this extension in the works that will alert you any time something attempts to write code or data to your clipboard without your explicit action. It's a natural extension of what this tool already does — keeping what's happening in the background visible and in your control.
+
+That said, this feature hasn't been fully tested yet, so it's not included in this repo. Once it's been put through its paces and the edge cases are sorted out, it'll be added here right away. Stay tuned!
+
+---
+
 ## 💬 Feedback
 
 Hope you find this useful! And if you don't — please, be brutally honest. That's how this gets better.
 
 The best place to reach me is **LinkedIn** (that's where I'm most active), but feel free to hit me up on any of my socials:
 
-- 🔗 LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/jevaun-s-75b4a6127/)
-- 🐦 Twitter/X: [Your Twitter](https://x.com/cyberjevii)
+- 🔗 LinkedIn: [LinkedIn](https://www.linkedin.com/in/jevaun-s-75b4a6127/)
+- 🐦 Twitter/X: [Twitter](https://x.com/cyberjevii)
 
 Seriously — if something's broken, confusing, or could be better, I want to hear it!
 
