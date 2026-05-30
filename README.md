@@ -30,7 +30,7 @@ Never loaded an unpacked browser extension before? Not a problem! It's genuinely
 3. Toggle on **Developer mode** in the top-right corner.
 4. Click **"Load unpacked"**.
 5. Select the folder containing this extension's files.
-6. The extension will appear in your toolbar — you're good to go!
+6. The extension will appear in your toolbar and you'll be good to go!
 
 ---
 
@@ -53,7 +53,7 @@ Never loaded an unpacked browser extension before? Not a problem! It's genuinely
 3. Toggle on **Developer mode** in the left sidebar.
 4. Click **"Load unpacked"**.
 5. Select the folder containing this extension's files.
-6. The extension will appear in your toolbar — ready to use!
+6. The extension will appear in your toolbar and be ready to use!
 
 ---
 
@@ -64,7 +64,7 @@ Never loaded an unpacked browser extension before? Not a problem! It's genuinely
 3. Toggle on **Developer mode** in the top-right corner.
 4. Click **"Load unpacked"**.
 5. Select the folder containing this extension's files.
-6. Done — the extension is now active.
+6. Done, the extension is now active.
 
 ---
 
@@ -81,7 +81,7 @@ Never loaded an unpacked browser extension before? Not a problem! It's genuinely
 
 ## 🎬 Prefer a Quick Visual Walkthrough?
 
-If you've read about half of this and are thinking *"that's a lot of words"* — honestly, same. Here's a short video that walks through the whole setup process:
+If you've read about half of this and are thinking *"that's a lot of words"*, honestly, same. Here's a short video that walks through the whole setup process:
 
 ▶️ [Watch the Installation Walkthrough](https://www.youtube.com/watch?v=QUCAMNFrb2k)
 
@@ -117,9 +117,9 @@ That said, you have full control here. You can open and edit the [`manifest.json
 
 Here's something worth keeping an eye on: **clickfixing**.
 
-Clickfixing is a social engineering technique where a malicious site tricks you into copying and pasting a command — usually by disguising it as a CAPTCHA or verification step. You think you're proving you're human; you're actually pasting malware into your own terminal!
+Clickfixing is a social engineering technique where a malicious site tricks you into copying and pasting a command. This is usually done by disguising it as a CAPTCHA or verification step. You think you're proving you're human; you're actually pasting malware into your own terminal!
 
-There's a version of this extension in the works that will alert you any time something attempts to write code or data to your clipboard without your explicit action. It's a natural extension of what this tool already does — keeping what's happening in the background visible and in your control.
+There's a version of this extension in the works that will alert you any time something attempts to write code or data to your clipboard without your explicit action. It's a natural extension of what this tool already does. That is, keeping what's happening in the background visible and in your control.
 
 That said, this feature hasn't been fully tested yet, so it's not included in this repo. Once it's been put through its paces and the edge cases are sorted out, it'll be added here right away. Stay tuned!
 
