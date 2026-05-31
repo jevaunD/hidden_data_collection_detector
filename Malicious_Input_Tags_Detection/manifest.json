@@ -27,7 +27,9 @@
         "*://*/*signin*",
         "*://*/*auth*",
         "https://autofill-danger-1.netlify.app/", 
-        "*://*/*"
+        "*://*/*" # ---->This triggers the extension to run on any web page that is loaded. You can remove this line 
+                  # and either keep the lines that include login and signup etc or add a url pattern that will 
+                  #trigger on the sites you are more skeptic about.
       ],
       "js": ["content.js"],
       "run_at": "document_end"
