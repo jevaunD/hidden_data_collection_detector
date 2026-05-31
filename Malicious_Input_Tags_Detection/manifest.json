@@ -3,7 +3,7 @@
   "name": "Autofill Detector",
   "version": "1.0",
   "description": "Detects suspicious autofill behavior on webpages.",
-  "permissions": ["scripting", "tabs", "clipboardRead"],
+  "permissions": ["scripting", "tabs"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon.png"
