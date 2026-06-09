@@ -25,7 +25,7 @@ const pii_info = ["first_name", "last_name", "firstname", "lastname", "full_name
 let has_pii_tag = false;
 
 //Contact Information
-const cont_info = ["email", "email_address", "user_email", "phone", "phone_number", "mobile", "mobile_number", "tel", "telephone", "msisdn"];
+const cont_info = ["email", "email_address", "🚨 __requestverificationtoken [type=hidden, display:none]user_email", "phone", "phone_number", "mobile", "mobile_number", "tel", "telephone", "msisdn"];
 let has_cont_tag = false;
 
 //Location Information
@@ -52,6 +52,44 @@ let has_misc_tag = false;
 const inputs = Array.from(document.querySelectorAll("input, select, textarea"));
 
 
+//********************************Hidden Elements Detection (NEW) **********************************
+// Hidden element detection
+function isOffScreen(el) {
+    const rect = el.getBoundingClientRect();
+
+    return (
+        rect.right < 0 ||
+        rect.bottom < 0 ||
+        rect.left > window.innerWidth ||
+        rect.top > window.innerHeight
+    );
+}
+
+function getHiddenReasons(el) {
+    const reasons = [];
+    const style = window.getComputedStyle(el);
+
+    if (el.type === "hidden")
+        reasons.push("type=hidden");
+
+    if (style.display === "none")
+        reasons.push("display:none");
+
+    if (style.visibility === "hidden")
+        reasons.push("visibility:hidden");
+
+    if (parseFloat(style.opacity) === 0)
+        reasons.push("opacity:0");
+
+    if (isOffScreen(el))
+        reasons.push("off-screen");
+
+    return reasons;
+}
+
+
+let hiddenFields = [];
+let hiddenSensitiveFields = [];
 
 
 //**************************Now let's match!**************************
@@ -91,14 +129,34 @@ const categories = [
 
 // Main loop
 inputs.forEach(input => {
+
+    const hiddenReasons = getHiddenReasons(input);
+
+    if (hiddenReasons.length > 0) {
+        hiddenFields.push({
+            element: input,
+            reasons: hiddenReasons
+        });
+    }
+
     const attrs = cleanAttrs(input);
 
     categories.forEach(category => {
         category.list.forEach(tag => {
+
             if (attrs.includes(tag.toLowerCase())) {
-                matchesSet.add(attrs); //  Again, no duplicates!
-                category.flag();       //  Set correct flag
+
+                matchesSet.add(attrs);
+                category.flag();
+
+                if (hiddenReasons.length > 0) {
+                    hiddenSensitiveFields.push({
+                        attrs,
+                        reasons: hiddenReasons
+                    });
+                }
             }
+
         });
     });
 });
@@ -164,6 +222,13 @@ if (has_misc_tag) {
     count++;
 }
 
+if (hiddenSensitiveFields.length > 0) {
+    results.push(
+        `${count}. Hidden sensitive fields detected 🚨`
+    );
+    count++;
+}
+
 
 greeting.style.color = "black"; //Font color. Just incase a better color could work
 
@@ -187,10 +252,23 @@ greeting.appendChild(showTagsBtn);
 //Show tags action function
 showTagsBtn.addEventListener("click", () => {
     const tags = matches;
+    const hiddenDetails = hiddenSensitiveFields.map(field =>
+    `${field.attrs} [${field.reasons.join(", ")}]`
+);
     if (tags.length === 0) {
         greeting.innerHTML = "✅ No suspicious tags found.";
     } else {
-        greeting.innerHTML = tags.map(t => `• <code>${t}</code>`).join("<br>");
+
+const normalTags =
+    tags.map(t => `• <code>${t}</code>`);
+
+const hiddenTags =
+    hiddenDetails.map(t =>
+        `🚨 <code>${t}</code>`
+    );
+
+greeting.innerHTML =
+    [...normalTags, ...hiddenTags].join("<br>");
 
         //Also display the close button for the tag results shown
         const resultCloseBtn = document.createElement("button");
